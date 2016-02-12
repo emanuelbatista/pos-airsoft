@@ -5,17 +5,23 @@
  */
 package br.edu.ifpb.pos.entity;
 
+import br.edu.ifpb.pos.entity.convert.ConvertDate;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -27,15 +33,19 @@ public class Jogo implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotBlank(message = "O objetivo do jogo não pode fica vazio")
     private String objetivo;
     private String enredo;
     private String missao;
-    private String local;
+    @Convert(converter = ConvertDate.class)
+    private LocalDateTime local;
+    @Enumerated(EnumType.ORDINAL)
+    private JogoEstado estado;
     private String horario;
     @Basic(fetch = FetchType.LAZY)
     @Lob
     private byte[] foto;
-    @ManyToOne
+    @OneToOne
     private Album album;
     @ManyToMany
     private List<Membro> membros;
@@ -72,11 +82,11 @@ public class Jogo implements Serializable{
         this.missao = missao;
     }
 
-    public String getLocal() {
+    public LocalDateTime getLocal() {
         return local;
     }
 
-    public void setLocal(String local) {
+    public void setLocal(LocalDateTime local) {
         this.local = local;
     }
 
@@ -95,7 +105,30 @@ public class Jogo implements Serializable{
     public void setFoto(byte[] foto) {
         this.foto = foto;
     }
-    
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
+    public List<Membro> getMembros() {
+        return membros;
+    }
+
+    public void setMembros(List<Membro> membros) {
+        this.membros = membros;
+    }
+
+    public JogoEstado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(JogoEstado estado) {
+        this.estado = estado;
+    }
     
     
     

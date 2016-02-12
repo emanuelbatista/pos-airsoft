@@ -9,6 +9,7 @@ import br.edu.ifpb.pos.service.dominio.service.ServiceDominioImp;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.ws.Endpoint;
 
 /**
  *
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
 public class Main {
     public static void main(String[] args) {
         try {
-            new  ServiceDominioImp();
+            Endpoint.publish("http://localhost:8003", new ServiceDominioImp());
         } catch (RemoteException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }

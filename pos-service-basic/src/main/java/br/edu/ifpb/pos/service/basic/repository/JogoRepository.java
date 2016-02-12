@@ -17,7 +17,7 @@ public class JogoRepository extends JpaRepository<Jogo, Long>{
    
     public List<Jogo> findJogoPaginado(Integer numPagina){
         TypedQuery<Jogo> query=entityManager.createQuery("SELECT j FROM Jogo j", Jogo.class);
-        query=query.setMaxResults(numPagina);
+        query=query.setMaxResults(5).setFirstResult((numPagina*5)-4);
         return query.getResultList();
     }
     

@@ -10,6 +10,7 @@ import br.edu.ifpb.pos.entity.Membro;
 import br.edu.ifpb.pos.service.ServiceBasic;
 import br.edu.ifpb.pos.service.basic.repository.JogoRepository;
 import br.edu.ifpb.pos.service.basic.repository.MembroRepository;
+import java.rmi.RemoteException;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -18,30 +19,45 @@ import javax.jws.soap.SOAPBinding;
  *
  * @author emanuel
  */
-@WebService(name = "ServiceBasic",serviceName = "ServiceBasic",targetNamespace = "http://service.pos.ifpb.edu.br/")
+@WebService(name = "ServiceBasic", serviceName = "ServiceBasic", targetNamespace = "http://service.pos.ifpb.edu.br/")
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT)
-public class ServiceBasicImp implements ServiceBasic{
-    
+public class ServiceBasicImp implements ServiceBasic {
+
     private final JogoRepository jogoRepository;
     private final MembroRepository membroRepository;
 
     public ServiceBasicImp() {
-        this.jogoRepository=new JogoRepository();
-        this.membroRepository=new MembroRepository();
+        this.jogoRepository = new JogoRepository();
+        this.membroRepository = new MembroRepository();
     }
-    
+
     @Override
-    public void addJogo(Jogo jogo){
+    public void addJogo(Jogo jogo) {
         jogoRepository.add(jogo);
     }
-    
+
     @Override
-    public void addMembro(Membro membro){
+    public void addMembro(Membro membro) {
         membroRepository.add(membro);
     }
-    
+
     @Override
-    public List<Jogo> findJogoPaginado(Integer numPagina){
+    public List<Jogo> findJogoPaginado(Integer numPagina) {
         return jogoRepository.findJogoPaginado(numPagina);
+    }
+
+    @Override
+    public Jogo findJogo(Long id) throws RemoteException {
+        return jogoRepository.findOne(Jogo.class, id);
+    }
+
+    @Override
+    public Membro findMembro(Long id) throws RemoteException {
+        return membroRepository.findOne(Membro.class, id);
+    }
+
+    @Override
+    public void atualizarJogo(Jogo jogo) throws RemoteException {
+        jogoRepository.edit(jogo);
     }
 }

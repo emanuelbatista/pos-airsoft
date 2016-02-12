@@ -6,7 +6,6 @@
 package br.edu.ifpb.pos.service;
 
 import br.edu.ifpb.pos.entity.Jogo;
-import br.edu.ifpb.pos.entity.Membro;
 import java.rmi.RemoteException;
 import java.util.List;
 import javax.jws.WebService;
@@ -16,17 +15,11 @@ import javax.jws.WebService;
  * @author emanuel
  */
 @WebService
-public interface ServiceBasic {
+public interface ServiceDominio {
     
     public void addJogo(Jogo jogo) throws RemoteException;
     
-    public void atualizarJogo(Jogo jogo) throws RemoteException;
+    public void addMembroAoJogo(Long idJogo,Long idMembro) throws RemoteException;
     
-    public Jogo findJogo(Long id) throws RemoteException;
-    
-    public Membro findMembro(Long id) throws RemoteException;
-    
-    public void addMembro(Membro membro) throws RemoteException;
-    
-    public List<Jogo> findJogoPaginado(Integer numPagina) throws RemoteException;
+    public List<Jogo> listJogos(Integer numPagina) throws RemoteException;
 }
