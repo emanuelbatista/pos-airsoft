@@ -4,30 +4,17 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 11/02/2016, 20:39:49
+    Created on : 13/02/2016, 21:50:43
     Author     : emanuel
 */
+
 .container-game{
     margin: 30px 0px;
-}
-.image-jogo{
-    width: 100px;
-    height: 100px;
-    position: relative;
-    display: block;
-    padding: 5px;
-    margin: 0 auto;
-    text-align: center;
-}
-.link-list{
-    background-color: #1b6d85;
-    color: black;
-    text-decoration: none;
 }
 .box-list{
     background-color: #b9b9b9;
     min-height: 100px;
-    padding: 10px;
+    padding: 20px 20px 1px 20px;
     margin: 30px 0;
     border-radius: 5px;
     color: black;
@@ -37,9 +24,6 @@ and open the template in the editor.
     background-color: #1b6d85;
 }
 
-.btn-group-estado{
-    margin: 3px;
-}
 .title{
     display: inline-block;
     font-size: medium;

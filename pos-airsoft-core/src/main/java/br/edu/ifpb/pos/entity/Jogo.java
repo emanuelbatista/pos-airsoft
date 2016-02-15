@@ -5,12 +5,9 @@
  */
 package br.edu.ifpb.pos.entity;
 
-import br.edu.ifpb.pos.entity.convert.ConvertDate;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,6 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -28,6 +27,10 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author emanuel
  */
 @Entity
+@NamedQueries({
+  @NamedQuery(name = "list.membros.nao.correspondente",query = "SELECT new br.edu.ifpb.pos.entity.Membro(m.id,m.nome,m.email) FROM Membro m "
+          + "WHERE NOT EXISTS(SELECT jm FROM Jogo j JOIN j.membros jm WHERE j.id=:id AND jm.id=m.id) AND UPPER(m.nome) LIKE UPPER(:pesquisa)")
+})
 public class Jogo implements Serializable{
     
     @Id
@@ -37,8 +40,7 @@ public class Jogo implements Serializable{
     private String objetivo;
     private String enredo;
     private String missao;
-    @Convert(converter = ConvertDate.class)
-    private LocalDateTime local;
+    private String local;
     @Enumerated(EnumType.ORDINAL)
     private JogoEstado estado;
     private String horario;
@@ -82,11 +84,11 @@ public class Jogo implements Serializable{
         this.missao = missao;
     }
 
-    public LocalDateTime getLocal() {
+    public String getLocal() {
         return local;
     }
 
-    public void setLocal(LocalDateTime local) {
+    public void setLocal(String local) {
         this.local = local;
     }
 

@@ -24,7 +24,15 @@ public interface ServiceBasic {
     
     public Jogo findJogo(Long id) throws RemoteException;
     
+    public List<Membro> findMembrosJogo(Long idJogo) throws RemoteException;
+    
+    public void addMembroAoJogo(Long idJogo, Long idMembro) throws RemoteException;
+    
     public Membro findMembro(Long id) throws RemoteException;
+    
+    public List<Membro> findMembrosJogoNaoCorrespondente(Long idJogo,String pesquisa) throws RemoteException;
+    
+    public List<Membro> findAllMembro() throws RemoteException;
     
     public void addMembro(Membro membro) throws RemoteException;
     

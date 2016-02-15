@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.pos.service.basic.repository;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -50,7 +51,7 @@ public class JpaRepository<T, K> implements Repository<T, K> {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            entityManager.refresh(t);
+            entityManager.merge(t);
             transaction.commit();
         } catch (TransactionException e) {
              if (transaction.isActive()) {
@@ -72,5 +73,6 @@ public class JpaRepository<T, K> implements Repository<T, K> {
             }
         }
     }
+
 
 }

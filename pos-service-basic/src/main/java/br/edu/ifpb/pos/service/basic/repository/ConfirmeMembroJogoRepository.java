@@ -5,22 +5,12 @@
  */
 package br.edu.ifpb.pos.service.basic.repository;
 
-import java.util.List;
+import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
 
 /**
  *
  * @author emanuel
- * @param <T>
- * @param <K>
  */
-public interface Repository<T,K> {
-    
-    public void add(T t);
-    
-    public T findOne(Class<T> clazz,K k);
-    
-    public void edit(T t);
-    
-    public void remove(T t);
+public class ConfirmeMembroJogoRepository extends JpaRepository<ConfirmeMembroJogo, String>{
     
 }

@@ -1,10 +1,9 @@
 <%-- 
-    Document   : addJogo
-    Created on : 11/02/2016, 13:17:56
+    Document   : addMembro
+    Created on : 13/02/2016, 19:46:27
     Author     : emanuel
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,12 +12,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="/css/addJogo.css" rel="stylesheet">
-        <title>Criar um novo Jogo</title>
+        <title>Criar um novo Membro</title>
     </head>
     <body>
         <%@include file="/WEB-INF/jsp/fragmentos/navbar.jsp" %>
         <div class="container-fluid">
-            <h1 class="text-center">Novo Jogo</h1>
+            <h1 class="text-center">Novo Membro</h1>
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
@@ -30,33 +29,25 @@
                         </div>
                     </c:if>
                     <div class="box-form">
-                        <form action="/jogo/add" method="post" enctype="multipart/form-data">
+                        <form action="/membro/add" method="post">
                             <div class="form-group">
-                                <label>Imagem do Jogo</label>
-                                <input type="file" name="image" >
+                                <label>Nome:</label>
+                                <input type="text" name="nome" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label>Objetivo:</label>
-                                <input type="text" name="objetivo" class="form-control">
+                                <label>E-mail:</label>
+                                <input type="email" class="form-control" name="email">
                             </div>
                             <div class="form-group">
-                                <label>Enredo:</label>
-                                <textarea class="form-control" name="enredo" placeholder="Enredo do jogo..."></textarea>
+                                <label>Código:</label>
+                                <input type="text" class="form-control" name="codigo" placeholder="código usado pelo membro">
                             </div>
                             <div class="form-group">
-                                <label>Missão:</label>
-                                <textarea class="form-control" name="missao" placeholder="Missão do jogo..."></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Local:</label>
-                                <input type="text" class="form-control" name="local" placeholder="local do jogo">
-                            </div>
-                            <div class="form-group">
-                                <label>Horário:</label>
-                                <input type="datetime-local" required class="form-control" name="horario" placeholder="horário">
+                                <label>Telefone:</label>
+                                <input type="tel" class="form-control" name="telefone">
                             </div>
                             <div class="form-group text-center">
-                                <button type="submit" class="btn btn-success">Criar Jogo</button>
+                                <button type="submit" class="btn btn-success">Criar Membro</button>
                             </div>
                         </form>
                     </div>

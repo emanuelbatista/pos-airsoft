@@ -14,6 +14,8 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 
 /**
  *
@@ -22,11 +24,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ServiceDominioConfiguration {
     
-//    @Bean
+    @Bean
+    @Scope(value = "singleton",proxyMode = ScopedProxyMode.DEFAULT)
     public ServiceDominio getService(){
         try {
-            URL url=new URL("http://localhost:8003/service");
-            QName qName=new QName("ServiceDominio");
+            URL url=new URL("http://localhost:8003/airsoft");
+            QName qName=new QName("http://service.pos.ifpb.edu.br/","ServiceDominio");
             Service service=Service.create(url, qName);
             return service.getPort(ServiceDominio.class);
         } catch (MalformedURLException ex) {

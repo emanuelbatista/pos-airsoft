@@ -5,7 +5,9 @@
  */
 package br.edu.ifpb.pos.service.dominio.service;
 
+import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
 import br.edu.ifpb.pos.entity.Jogo;
+import br.edu.ifpb.pos.entity.JogoEstado;
 import br.edu.ifpb.pos.entity.Membro;
 import br.edu.ifpb.pos.service.ServiceBasic;
 import br.edu.ifpb.pos.service.ServiceDominio;
@@ -23,41 +25,79 @@ import javax.validation.ConstraintViolation;
  */
 @WebService(name = "ServiceDominio", serviceName = "ServiceDominio", targetNamespace = "http://service.pos.ifpb.edu.br/")
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT)
-public class ServiceDominioImp implements ServiceDominio{
-
+public class ServiceDominioImp implements ServiceDominio {
+    
     private ServiceBasic serviceBasic;
-
+    
     public ServiceDominioImp() throws RemoteException {
-
+        
         try {
             this.serviceBasic = ServiceBasicFactory.getInstance();
         } catch (MalformedURLException ex) {
             throw new RemoteException(ex.getMessage());
         }
     }
-
+    
     @Override
     public void addJogo(Jogo jogo) throws RemoteException {
-        List<ConstraintViolation<Jogo>> violations=Validacao.validar(jogo);
-        if(!violations.isEmpty()){
-//            violations.get(1).
+        List<ConstraintViolation<Jogo>> violations = Validacao.validar(jogo);
+        if (!violations.isEmpty()) {
+            throw new RemoteException(violations.get(0).getMessage());
         }
+        jogo.setEstado(JogoEstado.ATIVO);
         serviceBasic.addJogo(jogo);
     }
-
     
     @Override
     public List<Jogo> listJogos(Integer numPagina) throws RemoteException {
         return serviceBasic.findJogoPaginado(numPagina);
-        
+    }
+    
+    @Override
+    public void addMembroAoJogo(Long idJogo, Long idMembro) throws RemoteException {
+        serviceBasic.addMembroAoJogo(idJogo, idMembro);
+    }
+    
+    @Override
+    public Jogo getJogo(Long id) throws RemoteException {
+        return serviceBasic.findJogo(id);
+    }
+    
+    @Override
+    public void addMembro(Membro membro) throws RemoteException {
+        List<ConstraintViolation<Membro>> violations = Validacao.validar(membro);
+        if (!violations.isEmpty()) {
+            throw new RemoteException(violations.get(0).getMessage());
+        }
+        serviceBasic.addMembro(membro);
+    }
+    
+    @Override
+    public List<Membro> listAllMembro() throws RemoteException {
+        return serviceBasic.findAllMembro();
+    }
+    
+    @Override
+    public List<Membro> listMembrosJogoNaoCorrespondente(Long idJogo, String pesquisa) throws RemoteException {
+        return serviceBasic.findMembrosJogoNaoCorrespondente(idJogo, pesquisa);
     }
 
     @Override
-    public void addMembroAoJogo(Long idJogo, Long idMembro) throws RemoteException {
-        Jogo jogo=serviceBasic.findJogo(idJogo);
-        Membro membro=serviceBasic.findMembro(idMembro);
-        jogo.getMembros().add(membro);
-        serviceBasic.atualizarJogo(jogo);
+    public List<Membro> listMembroJogo(Long idJogo) throws RemoteException {
+        return serviceBasic.findMembrosJogo(idJogo);
     }
 
+    @Override
+    public void enviarConfirmacaoMembroJogo(Long idJogo,Long idMembro) throws RemoteException {
+        Membro membro=serviceBasic.findMembro(idMembro);
+        
+        //
+        ConfirmeMembroJogo confirmeMembroJogo=new ConfirmeMembroJogo();
+        Jogo jogo=serviceBasic.findJogo(idJogo);
+        confirmeMembroJogo.setJogo(jogo);
+        confirmeMembroJogo.setMembro(membro);
+        //
+        
+    }
+    
 }

@@ -26,6 +26,17 @@ public class Membro implements Serializable {
     private String codigo;
     private String telefone;
 
+    public Membro() {
+    }
+
+    public Membro(Long id, String nome,String email) {
+        this.id = id;
+        this.nome=nome;
+        this.email = email;
+    }
+    
+    
+
     public Long getId() {
         return id;
     }
@@ -66,7 +77,7 @@ public class Membro implements Serializable {
         this.telefone = telefone;
     }
 
-
+    
    
     
     

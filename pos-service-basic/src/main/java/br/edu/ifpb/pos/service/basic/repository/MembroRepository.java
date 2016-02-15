@@ -6,6 +6,8 @@
 package br.edu.ifpb.pos.service.basic.repository;
 
 import br.edu.ifpb.pos.entity.Membro;
+import java.util.List;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -13,4 +15,8 @@ import br.edu.ifpb.pos.entity.Membro;
  */
 public class MembroRepository extends JpaRepository<Membro, Long>{
     
+    public List<Membro> findAll(){
+        TypedQuery<Membro> query=super.entityManager.createQuery("SELECT m FROM Membro m",Membro.class);
+        return query.getResultList();
+    }
 }

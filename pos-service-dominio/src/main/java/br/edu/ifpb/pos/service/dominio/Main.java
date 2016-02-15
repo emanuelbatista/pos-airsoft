@@ -18,7 +18,7 @@ import javax.xml.ws.Endpoint;
 public class Main {
     public static void main(String[] args) {
         try {
-            Endpoint.publish("http://localhost:8003", new ServiceDominioImp());
+            Endpoint.publish("http://localhost:8003/airsoft", new ServiceDominioImp());
         } catch (RemoteException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
