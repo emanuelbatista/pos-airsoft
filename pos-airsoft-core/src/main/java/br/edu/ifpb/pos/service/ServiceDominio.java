@@ -5,7 +5,9 @@
  */
 package br.edu.ifpb.pos.service;
 
+import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
 import br.edu.ifpb.pos.entity.Jogo;
+import br.edu.ifpb.pos.entity.JogoEstado;
 import br.edu.ifpb.pos.entity.Membro;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -20,6 +22,8 @@ public interface ServiceDominio {
     
     public void addJogo(Jogo jogo) throws RemoteException;
     
+    public void mudarEstadoJogo(Long idJogo,JogoEstado estado) throws RemoteException;
+    
     public void addMembro(Membro membro) throws RemoteException;
     
     public List<Membro> listAllMembro() throws RemoteException;
@@ -31,6 +35,12 @@ public interface ServiceDominio {
     public void enviarConfirmacaoMembroJogo(Long idJogo,Long idMembro) throws RemoteException;
     
     public Jogo getJogo(Long id) throws RemoteException;
+    
+    public boolean confirmarMembroJogo(String token) throws RemoteException;
+    
+    public ConfirmeMembroJogo getConfirmeMembroJogo(String token) throws RemoteException;
+    
+    public void removeConfirmeMembroJogo(ConfirmeMembroJogo confirmeMembroJogo) throws RemoteException;
     
     public List<Membro> listMembroJogo(Long idJogo) throws RemoteException;
     

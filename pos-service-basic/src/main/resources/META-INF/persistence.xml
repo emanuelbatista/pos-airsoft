@@ -5,6 +5,7 @@
     <class>br.edu.ifpb.pos.entity.Jogo</class>
     <class>br.edu.ifpb.pos.entity.Membro</class>
     <class>br.edu.ifpb.pos.entity.Album</class>
+    <class>br.edu.ifpb.pos.entity.ConfirmeMembroJogo</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/pos-airsoft"/>

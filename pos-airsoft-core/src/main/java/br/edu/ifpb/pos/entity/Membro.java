@@ -6,6 +6,7 @@
 package br.edu.ifpb.pos.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +17,7 @@ import javax.persistence.Id;
  * @author emanuel
  */
 @Entity
-public class Membro implements Serializable {
+public class Membro implements Serializable{
      
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -77,6 +78,32 @@ public class Membro implements Serializable {
         this.telefone = telefone;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Membro other = (Membro) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
+  
+    
+
+    
     
    
     

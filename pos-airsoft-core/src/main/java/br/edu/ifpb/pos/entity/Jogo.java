@@ -8,6 +8,7 @@ package br.edu.ifpb.pos.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -47,7 +48,7 @@ public class Jogo implements Serializable{
     @Basic(fetch = FetchType.LAZY)
     @Lob
     private byte[] foto;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Album album;
     @ManyToMany
     private List<Membro> membros;

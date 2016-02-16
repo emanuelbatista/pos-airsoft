@@ -21,8 +21,8 @@
                 <img src="/jogo/image/${jogo.id}" class="image-jogo img-circle">
             </div>
             <div class="btn-group-jogo">
-                <a href="#" class="btn btn-warning">Cancelar</a>
-                <a href="#" class="btn btn-danger">Encerrar</a>
+                <a href="/jogo/${jogo.id}/modificar/estado/CANCELADO" class="btn btn-warning">Cancelar</a>
+                <a href="/jogo/${jogo.id}/modificar/estado/ENCERRADO" class="btn btn-danger">Encerrar</a>
                 <a href="/jogo/${jogo.id}/membros" class="btn btn-primary">Membros</a>
                 <a href="#" class="btn btn-info">Albúm</a>
             </div>

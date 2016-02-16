@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.pos.service;
 
+import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
 import br.edu.ifpb.pos.entity.Jogo;
 import br.edu.ifpb.pos.entity.Membro;
 import java.rmi.RemoteException;
@@ -23,6 +24,12 @@ public interface ServiceBasic {
     public void atualizarJogo(Jogo jogo) throws RemoteException;
     
     public Jogo findJogo(Long id) throws RemoteException;
+    
+    public void addConfirmacaoMembroJogo(ConfirmeMembroJogo confirmeMembroJogo) throws RemoteException;
+    
+    public void removeConfirmacaoMembroJogo(ConfirmeMembroJogo confirmeMembroJogo) throws RemoteException;
+    
+    public ConfirmeMembroJogo getConfirmeMembroJogo(String token) throws RemoteException;
     
     public List<Membro> findMembrosJogo(Long idJogo) throws RemoteException;
     

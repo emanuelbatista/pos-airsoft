@@ -5,7 +5,9 @@
  */
 package br.edu.ifpb.airsoft.controller;
 
+import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
 import br.edu.ifpb.pos.entity.Jogo;
+import br.edu.ifpb.pos.entity.JogoEstado;
 import br.edu.ifpb.pos.entity.Membro;
 import br.edu.ifpb.pos.service.ServiceDominio;
 import java.io.IOException;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -39,7 +42,12 @@ public class JogoController {
     @Autowired
     private ServiceDominio serviceDominio;
 
-    @RequestMapping(value = {"/jogos", "/jogos/{numPage}"}, method = RequestMethod.GET)
+    @RequestMapping("/")
+    public String index() {
+        return "redirect:/jogos/1";
+    }
+
+    @RequestMapping(value = {"/jogos/{numPage}"}, method = RequestMethod.GET)
     public String listJogos(@PathVariable Integer numPage, Model model) {
         try {
             if (numPage.equals(0)) {
@@ -88,7 +96,7 @@ public class JogoController {
         } catch (RemoteException ex) {
             Logger.getLogger(JogoController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "redirect:/jogos";
+        return "redirect:/jogos/1";
     }
 
     @RequestMapping("/jogo/image/{idJogo}")
@@ -128,7 +136,7 @@ public class JogoController {
     @RequestMapping(value = "/jogo/{idJogo}/membros")
     public String getMembrosJogo(@PathVariable Long idJogo, Model model) {
         try {
-            List<Membro> membros= serviceDominio.listMembroJogo(idJogo);
+            List<Membro> membros = serviceDominio.listMembroJogo(idJogo);
             model.addAttribute("idJogo", idJogo);
             model.addAttribute("membros", membros);
         } catch (RemoteException ex) {
@@ -138,14 +146,51 @@ public class JogoController {
     }
 
     @RequestMapping(value = "/jogo/membros/add", method = RequestMethod.POST)
-    public String addMembroJogo(@RequestParam Long idJogo, @RequestParam List<Long> idMembro) {
+    public String addMembroJogo(@RequestParam Long idJogo, @RequestParam List<Long> idMembro, RedirectAttributes attributes) {
         for (Long idMembro1 : idMembro) {
             try {
-                serviceDominio.addMembroAoJogo(idJogo, idMembro1);
+                serviceDominio.enviarConfirmacaoMembroJogo(idJogo, idMembro1);
             } catch (RemoteException ex) {
                 Logger.getLogger(JogoController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return "redirect:/jogo/"+idJogo+"/membros";
+        attributes.addFlashAttribute("msg", "Solicitação sendo enviada");
+        return "redirect:/jogo/" + idJogo + "/membros";
+    }
+
+    @RequestMapping(value = "/jogo/membro/confirmacao/{idJogo}", method = RequestMethod.GET)
+    public String confirmarMembro(@PathVariable Long idJogo, Model model) {
+        try {
+            Jogo jogo = serviceDominio.getJogo(idJogo);
+            model.addAttribute("jogo", jogo);
+        } catch (RemoteException ex) {
+            Logger.getLogger(JogoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "jogo/confirmeMembro";
+    }
+
+    @RequestMapping(value = "/jogo/membro/confirmacao/{idJogo}", method = RequestMethod.POST)
+    public String confirmarMembro(@RequestParam String token, @PathVariable Long idJogo, Model model, RedirectAttributes attributes) {
+        boolean confirmado = false;
+        try {
+            confirmado = serviceDominio.confirmarMembroJogo(token);
+        } catch (RemoteException ex) {
+            Logger.getLogger(JogoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (!confirmado) {
+            attributes.addFlashAttribute("erro", "Token Inválido");
+            return "redirect:/jogo/membro/confirmacao/" + idJogo;
+        }
+        return "redirect:/jogo/" + idJogo + "/membros/";
+    }
+
+    @RequestMapping(value = "/jogo/{idJogo}/modificar/estado/{jogoEstado}")
+    public String mudarEstado(@PathVariable Long idJogo, @PathVariable JogoEstado jogoEstado) {
+        try {
+            serviceDominio.mudarEstadoJogo(idJogo, jogoEstado);
+        } catch (RemoteException ex) {
+            Logger.getLogger(JogoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "redirect:/jogo/" + idJogo;
     }
 }

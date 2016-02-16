@@ -5,9 +5,11 @@
  */
 package br.edu.ifpb.pos.service.basic.service;
 
+import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
 import br.edu.ifpb.pos.entity.Jogo;
 import br.edu.ifpb.pos.entity.Membro;
 import br.edu.ifpb.pos.service.ServiceBasic;
+import br.edu.ifpb.pos.service.basic.repository.ConfirmeMembroJogoRepository;
 import br.edu.ifpb.pos.service.basic.repository.JogoRepository;
 import br.edu.ifpb.pos.service.basic.repository.MembroRepository;
 import java.rmi.RemoteException;
@@ -25,10 +27,12 @@ public class ServiceBasicImp implements ServiceBasic {
 
     private final JogoRepository jogoRepository;
     private final MembroRepository membroRepository;
+    private final ConfirmeMembroJogoRepository confirmeMembroJogoRepository;
 
     public ServiceBasicImp() {
         this.jogoRepository = new JogoRepository();
         this.membroRepository = new MembroRepository();
+        this.confirmeMembroJogoRepository = new ConfirmeMembroJogoRepository();
     }
 
     @Override
@@ -63,18 +67,18 @@ public class ServiceBasicImp implements ServiceBasic {
 
     @Override
     public List<Membro> findAllMembro() throws RemoteException {
-       return membroRepository.findAll();
+        return membroRepository.findAll();
     }
 
     @Override
-    public List<Membro> findMembrosJogoNaoCorrespondente(Long idJogo,String pesquisa) throws RemoteException {
+    public List<Membro> findMembrosJogoNaoCorrespondente(Long idJogo, String pesquisa) throws RemoteException {
         return jogoRepository.findMembrosJogoNaoCorrespondente(idJogo, pesquisa);
     }
 
     @Override
     public void addMembroAoJogo(Long idJogo, Long idMembro) throws RemoteException {
-        Jogo jogo=jogoRepository.findOne(Jogo.class, idJogo);
-        Membro membro=membroRepository.findOne(Membro.class, idMembro);
+        Jogo jogo = jogoRepository.findOne(Jogo.class, idJogo);
+        Membro membro = membroRepository.findOne(Membro.class, idMembro);
         jogo.getMembros().add(membro);
         jogoRepository.edit(jogo);
     }
@@ -82,5 +86,20 @@ public class ServiceBasicImp implements ServiceBasic {
     @Override
     public List<Membro> findMembrosJogo(Long idJogo) throws RemoteException {
         return jogoRepository.findMembrosJogo(idJogo);
+    }
+
+    @Override
+    public void addConfirmacaoMembroJogo(ConfirmeMembroJogo confirmeMembroJogo) throws RemoteException {
+        confirmeMembroJogoRepository.add(confirmeMembroJogo);
+    }
+
+    @Override
+    public ConfirmeMembroJogo getConfirmeMembroJogo(String token) throws RemoteException {
+       return confirmeMembroJogoRepository.findOne(ConfirmeMembroJogo.class, token);
+    }
+
+    @Override
+    public void removeConfirmacaoMembroJogo(ConfirmeMembroJogo confirmeMembroJogo) throws RemoteException {
+        confirmeMembroJogoRepository.remove(confirmeMembroJogo);
     }
 }

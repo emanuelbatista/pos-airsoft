@@ -32,6 +32,7 @@ public class JpaRepository<T, K> implements Repository<T, K> {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
+            entityManager.flush();
             entityManager.persist(t);
             transaction.commit();
         } catch (TransactionException e) {
@@ -51,6 +52,7 @@ public class JpaRepository<T, K> implements Repository<T, K> {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
+            entityManager.flush();
             entityManager.merge(t);
             transaction.commit();
         } catch (TransactionException e) {
@@ -65,6 +67,7 @@ public class JpaRepository<T, K> implements Repository<T, K> {
           EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
+            entityManager.flush();
             entityManager.remove(entityManager.merge(t));
             transaction.commit();
         } catch (TransactionException e) {

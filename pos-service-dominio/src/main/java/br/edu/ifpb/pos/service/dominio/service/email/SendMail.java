@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.ifpb.pos.service.dominio.service.email;
 
 import java.util.Properties;
@@ -20,7 +15,6 @@ public class SendMail {
     private String mailSMTPServerPort;
     private final String EMAIL="airsoftplaygames@gmail.com";
     private final String SENHA="35212231";
-    
     /*
      * quando instanciar um Objeto ja sera atribuido o servidor SMTP do GMAIL 
      * e a porta usada por ele
@@ -77,7 +71,7 @@ public class SendMail {
             //Setando o assunto
             msg.setSubject(subject);
             //Setando o conteúdo/corpo do email
-            msg.setContent(message, "text/plain");
+            msg.setContent(message, "text/html; charset=utf-8");
         } catch (Exception e) {
             System.out.println(">> Erro: Completar Mensagem");
             e.printStackTrace();

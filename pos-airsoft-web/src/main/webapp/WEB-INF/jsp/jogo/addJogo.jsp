@@ -33,23 +33,23 @@
                         <form action="/jogo/add" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Imagem do Jogo</label>
-                                <input type="file" name="image" >
+                                <input type="file" required name="image" accept="image/*" >
                             </div>
                             <div class="form-group">
                                 <label>Objetivo:</label>
-                                <input type="text" name="objetivo" class="form-control">
+                                <input type="text" required name="objetivo" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Enredo:</label>
-                                <textarea class="form-control" name="enredo" placeholder="Enredo do jogo..."></textarea>
+                                <textarea class="form-control" required name="enredo" placeholder="Enredo do jogo..."></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Missão:</label>
-                                <textarea class="form-control" name="missao" placeholder="Missão do jogo..."></textarea>
+                                <textarea class="form-control" required name="missao" placeholder="Missão do jogo..."></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Local:</label>
-                                <input type="text" class="form-control" name="local" placeholder="local do jogo">
+                                <input type="text" class="form-control" required name="local" placeholder="local do jogo">
                             </div>
                             <div class="form-group">
                                 <label>Horário:</label>

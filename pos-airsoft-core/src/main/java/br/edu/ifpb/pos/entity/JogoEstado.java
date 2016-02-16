@@ -11,4 +11,6 @@ package br.edu.ifpb.pos.entity;
  */
 public enum JogoEstado {
     ATIVO,CANCELADO,ENCERRADO
+    
+    
 }

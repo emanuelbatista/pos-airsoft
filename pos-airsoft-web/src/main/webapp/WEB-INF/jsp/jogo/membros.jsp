@@ -20,9 +20,17 @@
             <h1 class="text-center">Lista de Membros</h1>
             <div class="text-center">
                 <!-- Button trigger modal -->
+                <a href="/jogo/${idJogo}" class="btn btn-primary">Jogo</a>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
                     Adicionar Membro
                 </button>
+            </div>
+            <div id="msg">
+                <c:if test="${msg!=null}">
+                    <div class="alert alert-success">
+                        ${msg}
+                    </div>
+                </c:if>
             </div>
             <div class="container-game">
                 <div class="row">
@@ -74,15 +82,15 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Email do membro:</label>
-                                    <select class="form-control select2 select-membro" required="true" style="width: 100%;" name="idMembro" multiple="true">
+                                    <select class="form-control select2 select-membro" id="idMembros" required="true" style="width: 100%;" name="idMembro" multiple="true">
                                     </select>
-                                    <input type="hidden" value="${idJogo}" name="idJogo">
+                                    <input type="hidden" value="${idJogo}" id="idJogo" name="idJogo">
                                 </div>
 
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                <button type="submit" id="btn-add" class="btn btn-primary">Salvar</button>
                             </div>
                         </div>
                     </form>
@@ -134,6 +142,7 @@
             });
 
         </script>
+        <script src="/js/jogo-membro.js"></script>
     </body>
 </html>
 
