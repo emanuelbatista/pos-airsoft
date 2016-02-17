@@ -5,7 +5,9 @@
  */
 package br.edu.ifpb.pos.service;
 
+import br.edu.ifpb.pos.entity.Album;
 import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
+import br.edu.ifpb.pos.entity.Imagem;
 import br.edu.ifpb.pos.entity.Jogo;
 import br.edu.ifpb.pos.entity.Membro;
 import java.rmi.RemoteException;
@@ -44,4 +46,12 @@ public interface ServiceBasic {
     public void addMembro(Membro membro) throws RemoteException;
     
     public List<Jogo> findJogoPaginado(Integer numPagina) throws RemoteException;
+    
+    public Byte[] getImagemDado(Long idImagem) throws RemoteException;
+    
+    public Album getAlbum(Long idAlbum) throws RemoteException;
+    
+    public void editAlbum(Album album) throws RemoteException;
+    
+    public void addNovaImagemAlbum(Long idAlbum, Imagem imagem) throws RemoteException;
 }

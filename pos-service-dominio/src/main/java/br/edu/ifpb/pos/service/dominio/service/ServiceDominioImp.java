@@ -7,6 +7,7 @@ package br.edu.ifpb.pos.service.dominio.service;
 
 import br.edu.ifpb.pos.entity.Album;
 import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
+import br.edu.ifpb.pos.entity.Imagem;
 import br.edu.ifpb.pos.entity.Jogo;
 import br.edu.ifpb.pos.entity.JogoEstado;
 import br.edu.ifpb.pos.entity.Membro;
@@ -17,8 +18,6 @@ import br.edu.ifpb.pos.service.dominio.validation.Validacao;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.validation.ConstraintViolation;
@@ -56,11 +55,6 @@ public class ServiceDominioImp implements ServiceDominio {
     @Override
     public List<Jogo> listJogos(Integer numPagina) throws RemoteException {
         return serviceBasic.findJogoPaginado(numPagina);
-    }
-
-    @Override
-    public void addMembroAoJogo(Long idJogo, Long idMembro) throws RemoteException {
-        serviceBasic.addMembroAoJogo(idJogo, idMembro);
     }
 
     @Override
@@ -109,16 +103,6 @@ public class ServiceDominioImp implements ServiceDominio {
     }
 
     @Override
-    public ConfirmeMembroJogo getConfirmeMembroJogo(String token) throws RemoteException {
-        return serviceBasic.getConfirmeMembroJogo(token);
-    }
-
-    @Override
-    public void removeConfirmeMembroJogo(ConfirmeMembroJogo confirmeMembroJogo) throws RemoteException {
-        serviceBasic.removeConfirmacaoMembroJogo(confirmeMembroJogo);
-    }
-
-    @Override
     public void mudarEstadoJogo(Long idJogo, JogoEstado estado) throws RemoteException {
         Jogo jogo = serviceBasic.findJogo(idJogo);
         jogo.setEstado(estado);
@@ -131,7 +115,7 @@ public class ServiceDominioImp implements ServiceDominio {
     @Override
     public boolean confirmarMembroJogo(String token) throws RemoteException {
         ConfirmeMembroJogo confirmeMembroJogo = serviceBasic.getConfirmeMembroJogo(token);
-        if(confirmeMembroJogo==null){
+        if (confirmeMembroJogo == null) {
             return false;
         }
         //
@@ -145,6 +129,35 @@ public class ServiceDominioImp implements ServiceDominio {
         }
         //
         return true;
+    }
+    
+    @Override
+    public Album getAlbumJogo(Long idJogo) throws RemoteException {
+        Jogo jogo = serviceBasic.findJogo(idJogo);
+        return serviceBasic.getAlbum(jogo.getAlbum().getId());
+    }
+
+
+    @Override
+    public Byte[] getImagemDado(Long idImagem) throws RemoteException {
+        return serviceBasic.getImagemDado(idImagem);
+    }
+
+    @Override
+    public Album getAlbum(Long idAlbum) throws RemoteException {
+        return serviceBasic.getAlbum(idAlbum);
+    }
+    
+    @Override
+    public void modificarNomeAlbum(Long idAlbum,String nome) throws RemoteException{
+        Album album=serviceBasic.getAlbum(idAlbum);
+        album.setNome(nome);
+        serviceBasic.editAlbum(album);
+    }
+
+    @Override
+    public void addNovaImagemAlbum(Long idAlbum, Imagem imagem) throws RemoteException {
+       serviceBasic.addNovaImagemAlbum(idAlbum, imagem);
     }
 
 }

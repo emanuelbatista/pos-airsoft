@@ -5,7 +5,8 @@
  */
 package br.edu.ifpb.airsoft.controller;
 
-import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
+import br.edu.ifpb.pos.entity.Album;
+import br.edu.ifpb.pos.entity.Imagem;
 import br.edu.ifpb.pos.entity.Jogo;
 import br.edu.ifpb.pos.entity.JogoEstado;
 import br.edu.ifpb.pos.entity.Membro;
@@ -192,5 +193,71 @@ public class JogoController {
             Logger.getLogger(JogoController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "redirect:/jogo/" + idJogo;
+    }
+
+    @RequestMapping(value = "/jogo/{idJogo}/album")
+    public String getAlbumJogo(@PathVariable Long idJogo, Model model) {
+        try {
+            Album album = serviceDominio.getAlbumJogo(idJogo);
+            model.addAttribute(album);
+            model.addAttribute(idJogo);
+        } catch (RemoteException ex) {
+            Logger.getLogger(JogoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "jogo/album";
+
+    }
+
+    @RequestMapping(value = "/jogo/album/imagem/{idImagem}")
+    public void getImagem(OutputStream out, @PathVariable Long idImagem) {
+        try {
+            Byte[] imagem = serviceDominio.getImagemDado(idImagem);
+            out.write(paraPrimitivo(imagem));
+            out.flush();
+        } catch (RemoteException ex) {
+            Logger.getLogger(JogoController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(JogoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private byte[] paraPrimitivo(Byte[] bytes) {
+        byte[] bytesPrimitivo = new byte[bytes.length];
+        for (int i = 0; i < bytes.length; i++) {
+            bytesPrimitivo[i] = bytes[i];
+        }
+        return bytesPrimitivo;
+    }
+
+    private Byte[] paraObjeto(byte[] bytes) {
+        Byte[] bytesObjeto = new Byte[bytes.length];
+        for (int i = 0; i < bytes.length; i++) {
+            bytesObjeto[i] = bytes[i];
+        }
+        return bytesObjeto;
+    }
+
+    @RequestMapping(value = "/jogo/{idJogo}/album/imagem/add")
+    public String addImagemAlbum(@PathVariable Long idJogo, @RequestParam Long idAlbum, @RequestParam List<MultipartFile> imagens) {
+        for (MultipartFile imagem : imagens) {
+            try {
+                Imagem img = new Imagem();
+                img.setImagem(paraObjeto(imagem.getBytes()));
+                serviceDominio.addNovaImagemAlbum(idAlbum, img);
+            } catch (IOException ex) {
+                Logger.getLogger(JogoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return "redirect:/jogo/" + idJogo + "/album";
+    }
+
+    @RequestMapping(value = "/jogo/{idJogo}/album/edit/{idAlbum}", method = RequestMethod.POST)
+    public String atualizarInfoAlbum(@PathVariable Long idJogo, @PathVariable Long idAlbum, @RequestParam String nome) {
+        try {
+            serviceDominio.modificarNomeAlbum(idAlbum, nome);
+        } catch (RemoteException ex) {
+            Logger.getLogger(JogoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "redirect:/jogo/" + idJogo + "/album";
     }
 }

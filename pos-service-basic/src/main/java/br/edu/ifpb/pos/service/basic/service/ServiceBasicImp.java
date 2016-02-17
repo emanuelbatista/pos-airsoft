@@ -5,11 +5,15 @@
  */
 package br.edu.ifpb.pos.service.basic.service;
 
+import br.edu.ifpb.pos.entity.Album;
 import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
+import br.edu.ifpb.pos.entity.Imagem;
 import br.edu.ifpb.pos.entity.Jogo;
 import br.edu.ifpb.pos.entity.Membro;
 import br.edu.ifpb.pos.service.ServiceBasic;
+import br.edu.ifpb.pos.service.basic.repository.AlbumRepository;
 import br.edu.ifpb.pos.service.basic.repository.ConfirmeMembroJogoRepository;
+import br.edu.ifpb.pos.service.basic.repository.ImagemRepository;
 import br.edu.ifpb.pos.service.basic.repository.JogoRepository;
 import br.edu.ifpb.pos.service.basic.repository.MembroRepository;
 import java.rmi.RemoteException;
@@ -28,11 +32,15 @@ public class ServiceBasicImp implements ServiceBasic {
     private final JogoRepository jogoRepository;
     private final MembroRepository membroRepository;
     private final ConfirmeMembroJogoRepository confirmeMembroJogoRepository;
+    private final ImagemRepository imagemRepository;
+    private final AlbumRepository albumRepository;
 
     public ServiceBasicImp() {
         this.jogoRepository = new JogoRepository();
         this.membroRepository = new MembroRepository();
         this.confirmeMembroJogoRepository = new ConfirmeMembroJogoRepository();
+        this.imagemRepository = new ImagemRepository();
+        this.albumRepository = new AlbumRepository();
     }
 
     @Override
@@ -95,11 +103,34 @@ public class ServiceBasicImp implements ServiceBasic {
 
     @Override
     public ConfirmeMembroJogo getConfirmeMembroJogo(String token) throws RemoteException {
-       return confirmeMembroJogoRepository.findOne(ConfirmeMembroJogo.class, token);
+        return confirmeMembroJogoRepository.findOne(ConfirmeMembroJogo.class, token);
     }
 
     @Override
     public void removeConfirmacaoMembroJogo(ConfirmeMembroJogo confirmeMembroJogo) throws RemoteException {
         confirmeMembroJogoRepository.remove(confirmeMembroJogo);
     }
+
+    @Override
+    public Byte[] getImagemDado(Long idImagem) throws RemoteException {
+        return imagemRepository.getImagemDado(idImagem);
+    }
+
+    @Override
+    public Album getAlbum(Long idAlbum) throws RemoteException {
+        return albumRepository.findOne(Album.class, idAlbum);
+    }
+
+    @Override
+    public void addNovaImagemAlbum(Long idAlbum, Imagem imagem) throws RemoteException {
+        Album album = albumRepository.findOne(Album.class, idAlbum);
+        album.getImagens().add(imagem);
+        albumRepository.edit(album);
+    }
+
+    @Override
+    public void editAlbum(Album album) throws RemoteException {
+        albumRepository.edit(album);
+    }
+
 }

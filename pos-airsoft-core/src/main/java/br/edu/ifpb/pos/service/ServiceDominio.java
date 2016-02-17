@@ -5,7 +5,8 @@
  */
 package br.edu.ifpb.pos.service;
 
-import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
+import br.edu.ifpb.pos.entity.Album;
+import br.edu.ifpb.pos.entity.Imagem;
 import br.edu.ifpb.pos.entity.Jogo;
 import br.edu.ifpb.pos.entity.JogoEstado;
 import br.edu.ifpb.pos.entity.Membro;
@@ -30,19 +31,23 @@ public interface ServiceDominio {
     
     public List<Membro> listMembrosJogoNaoCorrespondente(Long idJogo,String pesquisa) throws RemoteException;
     
-    public void addMembroAoJogo(Long idJogo,Long idMembro) throws RemoteException;
-    
     public void enviarConfirmacaoMembroJogo(Long idJogo,Long idMembro) throws RemoteException;
     
     public Jogo getJogo(Long id) throws RemoteException;
     
     public boolean confirmarMembroJogo(String token) throws RemoteException;
     
-    public ConfirmeMembroJogo getConfirmeMembroJogo(String token) throws RemoteException;
-    
-    public void removeConfirmeMembroJogo(ConfirmeMembroJogo confirmeMembroJogo) throws RemoteException;
-    
     public List<Membro> listMembroJogo(Long idJogo) throws RemoteException;
     
+    public Album getAlbumJogo(Long idJogo) throws RemoteException;
+    
+    public Byte[] getImagemDado(Long idImagem) throws RemoteException;
+    
     public List<Jogo> listJogos(Integer numPagina) throws RemoteException;
+    
+    public Album getAlbum(Long idAlbum) throws RemoteException;
+    
+    public void modificarNomeAlbum(Long idAlbum,String nome) throws RemoteException;
+    
+    public void addNovaImagemAlbum(Long idAlbum,Imagem imagem) throws RemoteException;
 }

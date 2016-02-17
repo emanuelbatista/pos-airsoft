@@ -24,7 +24,7 @@
                 <a href="/jogo/${jogo.id}/modificar/estado/CANCELADO" class="btn btn-warning">Cancelar</a>
                 <a href="/jogo/${jogo.id}/modificar/estado/ENCERRADO" class="btn btn-danger">Encerrar</a>
                 <a href="/jogo/${jogo.id}/membros" class="btn btn-primary">Membros</a>
-                <a href="#" class="btn btn-info">Albúm</a>
+                <a href="/jogo/${jogo.id}/album" class="btn btn-info">Albúm</a>
             </div>
             <div class="row">
                 <div class="col-sm-3">

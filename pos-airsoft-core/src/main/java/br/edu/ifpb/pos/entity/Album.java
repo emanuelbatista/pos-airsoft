@@ -7,12 +7,13 @@ package br.edu.ifpb.pos.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -26,9 +27,8 @@ public class Album implements Serializable{
     private Long id;
     private String nome;
     private String codigoJogo;
-    @ElementCollection
-    @Lob
-    private List<Byte[]> imagens;
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private List<Imagem> imagens;
 
     public Long getId() {
         return id;
@@ -54,13 +54,16 @@ public class Album implements Serializable{
         this.codigoJogo = codigoJogo;
     }
 
-    public List<Byte[]> getImagens() {
+    public List<Imagem> getImagens() {
         return imagens;
     }
 
-    public void setImagens(List<Byte[]> imagens) {
+    public void setImagens(List<Imagem> imagens) {
         this.imagens = imagens;
     }
+
+   
+    
     
     
     
