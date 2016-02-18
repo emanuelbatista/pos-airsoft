@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 /**
  *
- * @author douglasgabriel
+ * @author Emanuel
  * @version 0.1
  */
 public class GenerateCodeUtils {

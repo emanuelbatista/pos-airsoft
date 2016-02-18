@@ -16,7 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 /**
- *
+ * Representa a entidade de um album de fotos
  * @author emanuel
  */
 @Entity

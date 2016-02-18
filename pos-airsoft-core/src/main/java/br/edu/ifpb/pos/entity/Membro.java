@@ -13,7 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- *
+ *Representa a entidade Membro
  * @author emanuel
  */
 @Entity

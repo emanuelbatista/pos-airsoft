@@ -11,11 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 /**
- *
+ * Representa a entidade que contém as informações para confirmação do membro ao jogo
  * @author emanuel
  */
 @Entity
-public class ConfirmeMembroJogo implements Serializable {
+public class ConfirmacaoMembroJogo implements Serializable {
     
     @Id
     private String token; 

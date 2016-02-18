@@ -43,11 +43,23 @@ public class JogoController {
     @Autowired
     private ServiceDominio serviceDominio;
 
+    /**
+     * Página Inicial
+     *
+     * @return
+     */
     @RequestMapping("/")
     public String index() {
         return "redirect:/jogos/1";
     }
 
+    /**
+     * Lista dos jogos de acordo com sua paginação
+     *
+     * @param numPage
+     * @param model
+     * @return
+     */
     @RequestMapping(value = {"/jogos/{numPage}"}, method = RequestMethod.GET)
     public String listJogos(@PathVariable Integer numPage, Model model) {
         try {
@@ -62,6 +74,34 @@ public class JogoController {
         return "jogo/listJogo";
     }
 
+    /**
+     * Lista páginada com os jogos já realizados
+     *
+     * @param numPage
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = {"/jogos/{numPage}/realizados"}, method = RequestMethod.GET)
+    public String listJogosEstado(@PathVariable Integer numPage, Model model) {
+        try {
+            if (numPage.equals(0)) {
+                numPage = 1;
+            }
+            model.addAttribute("numPage", numPage);
+            model.addAttribute("listJogo", serviceDominio.listJogoEstado(numPage, JogoEstado.ENCERRADO));
+        } catch (RemoteException ex) {
+            Logger.getLogger(JogoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "jogo/listJogo";
+    }
+
+    /**
+     * Mostra as informações detalhada de uma determinado jogo
+     *
+     * @param idJogo
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/jogo/{idJogo}")
     public String getJogo(@PathVariable Long idJogo, Model model) {
         try {
@@ -73,11 +113,25 @@ public class JogoController {
         return "jogo/jogo";
     }
 
+    /**
+     * Retorna a página que add um novo jogo
+     *
+     * @return
+     */
     @RequestMapping(value = "/jogo/add", method = RequestMethod.GET)
     public String addJogo() {
         return "jogo/addJogo";
     }
 
+    /**
+     * Adiciona um novo jogo
+     *
+     * @param jogo
+     * @param result
+     * @param model
+     * @param image
+     * @return
+     */
     @RequestMapping(value = "/jogo/add", method = RequestMethod.POST)
     public String addJogo(@Valid Jogo jogo, BindingResult result, Model model, @RequestParam MultipartFile image) {
         if (result.hasErrors()) {
@@ -100,6 +154,12 @@ public class JogoController {
         return "redirect:/jogos/1";
     }
 
+    /**
+     * Retorna a imagem de acordo com seu id
+     *
+     * @param out
+     * @param idJogo
+     */
     @RequestMapping("/jogo/image/{idJogo}")
     public void getImageJogo(OutputStream out, @PathVariable Long idJogo) {
         try {
@@ -114,6 +174,14 @@ public class JogoController {
 
     }
 
+    /**
+     * Retona a lista de membros de com o termo da pesquisa e que não está
+     * vinculado com jogo passado
+     *
+     * @param idJogo
+     * @param pesquisa
+     * @return
+     */
     @RequestMapping(value = "/jogo/nao/membro/pesquisa", method = RequestMethod.GET)
     public @ResponseBody
     List<Object[]> pesquisarMembrosNaoCorrespondente(@RequestParam("id") Long idJogo, @RequestParam String pesquisa) {
@@ -134,6 +202,12 @@ public class JogoController {
         return objects;
     }
 
+    /**
+     * Mostra os membro de um determinado jogo
+     * @param idJogo
+     * @param model
+     * @return 
+     */
     @RequestMapping(value = "/jogo/{idJogo}/membros")
     public String getMembrosJogo(@PathVariable Long idJogo, Model model) {
         try {
@@ -146,6 +220,13 @@ public class JogoController {
         return "jogo/membros";
     }
 
+    /**
+     *  Adiciona um novo Membro ao jogo
+     * @param idJogo
+     * @param idMembro
+     * @param attributes
+     * @return 
+     */
     @RequestMapping(value = "/jogo/membros/add", method = RequestMethod.POST)
     public String addMembroJogo(@RequestParam Long idJogo, @RequestParam List<Long> idMembro, RedirectAttributes attributes) {
         for (Long idMembro1 : idMembro) {
@@ -159,6 +240,12 @@ public class JogoController {
         return "redirect:/jogo/" + idJogo + "/membros";
     }
 
+    /**
+     * página para confirmação da participação de membro ao jogo 
+     * @param idJogo
+     * @param model
+     * @return 
+     */
     @RequestMapping(value = "/jogo/membro/confirmacao/{idJogo}", method = RequestMethod.GET)
     public String confirmarMembro(@PathVariable Long idJogo, Model model) {
         try {
@@ -170,6 +257,14 @@ public class JogoController {
         return "jogo/confirmeMembro";
     }
 
+    /**
+     * Confirma a participação do mebro ao jogo
+     * @param token
+     * @param idJogo
+     * @param model
+     * @param attributes
+     * @return 
+     */
     @RequestMapping(value = "/jogo/membro/confirmacao/{idJogo}", method = RequestMethod.POST)
     public String confirmarMembro(@RequestParam String token, @PathVariable Long idJogo, Model model, RedirectAttributes attributes) {
         boolean confirmado = false;
@@ -185,6 +280,12 @@ public class JogoController {
         return "redirect:/jogo/" + idJogo + "/membros/";
     }
 
+    /**
+     * Muda o estado de um jogo
+     * @param idJogo
+     * @param jogoEstado
+     * @return 
+     */
     @RequestMapping(value = "/jogo/{idJogo}/modificar/estado/{jogoEstado}")
     public String mudarEstado(@PathVariable Long idJogo, @PathVariable JogoEstado jogoEstado) {
         try {
@@ -195,11 +296,19 @@ public class JogoController {
         return "redirect:/jogo/" + idJogo;
     }
 
+    /**
+     * Página de album de fotos de um jogo
+     * @param idJogo
+     * @param model
+     * @return 
+     */
     @RequestMapping(value = "/jogo/{idJogo}/album")
     public String getAlbumJogo(@PathVariable Long idJogo, Model model) {
         try {
-            Album album = serviceDominio.getAlbumJogo(idJogo);
-            model.addAttribute(album);
+            Jogo jogo = serviceDominio.getJogo(idJogo);
+            Album album = serviceDominio.getAlbum(jogo.getAlbum().getId());
+            model.addAttribute(jogo);
+            model.addAttribute("album", album);
             model.addAttribute(idJogo);
         } catch (RemoteException ex) {
             Logger.getLogger(JogoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,6 +317,11 @@ public class JogoController {
 
     }
 
+    /**
+     * Retorna o dado de imagem de acordo com seu ID
+     * @param out
+     * @param idImagem 
+     */
     @RequestMapping(value = "/jogo/album/imagem/{idImagem}")
     public void getImagem(OutputStream out, @PathVariable Long idImagem) {
         try {
@@ -237,6 +351,13 @@ public class JogoController {
         return bytesObjeto;
     }
 
+    /**
+     * Adiciona uma nova imagem ao album
+     * @param idJogo
+     * @param idAlbum
+     * @param imagens
+     * @return 
+     */
     @RequestMapping(value = "/jogo/{idJogo}/album/imagem/add")
     public String addImagemAlbum(@PathVariable Long idJogo, @RequestParam Long idAlbum, @RequestParam List<MultipartFile> imagens) {
         for (MultipartFile imagem : imagens) {
@@ -251,6 +372,13 @@ public class JogoController {
         return "redirect:/jogo/" + idJogo + "/album";
     }
 
+    /**
+     * Edita as informações de album de um jogo
+     * @param idJogo
+     * @param idAlbum
+     * @param nome
+     * @return 
+     */
     @RequestMapping(value = "/jogo/{idJogo}/album/edit/{idAlbum}", method = RequestMethod.POST)
     public String atualizarInfoAlbum(@PathVariable Long idJogo, @PathVariable Long idAlbum, @RequestParam String nome) {
         try {

@@ -9,11 +9,18 @@ import br.edu.ifpb.pos.entity.Imagem;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ *Repositório que realiza as operações na base de dados da entidade {@link Imagem} 
+ * 
  * @author emanuel
  */
 public class ImagemRepository extends JpaRepository<Imagem, Long>{
     
+    /**
+     * Retorna o dado da imagem apartir do id da imagem
+     * 
+     * @param idImagem
+     * @return Dado da Imagem
+     */
     public Byte[] getImagemDado(Long idImagem){
         TypedQuery<Byte[]> query=super.entityManager.createQuery("SELECT i.imagem FROM Imagem i WHERE i.id=:id", Byte[].class);
         query.setParameter("id", idImagem);

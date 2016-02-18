@@ -6,9 +6,10 @@
 package br.edu.ifpb.pos.service.basic.service;
 
 import br.edu.ifpb.pos.entity.Album;
-import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
+import br.edu.ifpb.pos.entity.ConfirmacaoMembroJogo;
 import br.edu.ifpb.pos.entity.Imagem;
 import br.edu.ifpb.pos.entity.Jogo;
+import br.edu.ifpb.pos.entity.JogoEstado;
 import br.edu.ifpb.pos.entity.Membro;
 import br.edu.ifpb.pos.service.ServiceBasic;
 import br.edu.ifpb.pos.service.basic.repository.AlbumRepository;
@@ -97,17 +98,17 @@ public class ServiceBasicImp implements ServiceBasic {
     }
 
     @Override
-    public void addConfirmacaoMembroJogo(ConfirmeMembroJogo confirmeMembroJogo) throws RemoteException {
+    public void addConfirmacaoMembroJogo(ConfirmacaoMembroJogo confirmeMembroJogo) throws RemoteException {
         confirmeMembroJogoRepository.add(confirmeMembroJogo);
     }
 
     @Override
-    public ConfirmeMembroJogo getConfirmeMembroJogo(String token) throws RemoteException {
-        return confirmeMembroJogoRepository.findOne(ConfirmeMembroJogo.class, token);
+    public ConfirmacaoMembroJogo getConfirmeMembroJogo(String token) throws RemoteException {
+        return confirmeMembroJogoRepository.findOne(ConfirmacaoMembroJogo.class, token);
     }
 
     @Override
-    public void removeConfirmacaoMembroJogo(ConfirmeMembroJogo confirmeMembroJogo) throws RemoteException {
+    public void removeConfirmacaoMembroJogo(ConfirmacaoMembroJogo confirmeMembroJogo) throws RemoteException {
         confirmeMembroJogoRepository.remove(confirmeMembroJogo);
     }
 
@@ -131,6 +132,11 @@ public class ServiceBasicImp implements ServiceBasic {
     @Override
     public void editAlbum(Album album) throws RemoteException {
         albumRepository.edit(album);
+    }
+
+    @Override
+    public List<Jogo> finJogoPaginadoEstado(Integer numPagina, JogoEstado estado) throws RemoteException {
+        return jogoRepository.findJogoPaginadoEstado(numPagina, estado);
     }
 
 }

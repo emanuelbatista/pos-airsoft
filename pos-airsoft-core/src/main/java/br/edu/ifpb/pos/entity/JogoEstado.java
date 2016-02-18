@@ -6,7 +6,7 @@
 package br.edu.ifpb.pos.entity;
 
 /**
- *
+ *Representa o estado do jogo
  * @author emanuel
  */
 public enum JogoEstado {

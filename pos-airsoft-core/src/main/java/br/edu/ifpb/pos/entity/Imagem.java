@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 
 /**
- *
+ * Representa a entidade que contém as informações de uma imagem
  * @author emanuel
  */
 @Entity

@@ -9,6 +9,10 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 
+/**
+ * Responsável por enviar e-amil 
+ * @author emanuel
+ */
 public class SendMail {
 
     private String mailSMTPServer;
@@ -33,7 +37,13 @@ public class SendMail {
         this.mailSMTPServer = mailSMTPServer;
         this.mailSMTPServerPort = mailSMTPServerPort;
     }
-
+/**
+ * Método que enviar um e-mail de acordo com os parâmetros contemplados
+ * @param from - quem envia o e-mail
+ * @param to - destino do e-mail
+ * @param subject - assunto do e-mail   
+ * @param message - messagem do e-mail
+ */
     public void sendMail(String from, String to, String subject, String message) {
         Properties props = new Properties();
                 // quem estiver utilizando um SERVIDOR PROXY descomente essa parte e atribua as propriedades do SERVIDOR PROXY utilizado
@@ -97,8 +107,10 @@ public class SendMail {
         }
     }
 }
-//clase que retorna uma autenticacao para ser enviada e verificada pelo servidor smtp
-
+/**
+ * clase que retorna uma autenticacao para ser enviada e verificada pelo servidor smtp
+ * @author Emanuel
+*/
 class SimpleAuth extends Authenticator {
 
     public String username = null;

@@ -21,9 +21,11 @@
             <div class="text-center">
                 <!-- Button trigger modal -->
                 <a href="/jogo/${idJogo}" class="btn btn-primary">Jogo</a>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
-                    Adicionar Foto
-                </button>
+                <c:if test="${jogo.estado=='ENCERRADO'}">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                        Adicionar Foto
+                    </button>
+                </c:if>
             </div>
             <div id="msg">
                 <c:if test="${msg!=null}">
@@ -38,12 +40,12 @@
                         <div class="box-list">
 
                             <c:if test="${album.nome!=null}">
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading"><b>Nome</b></div>
-                                        <div class="panel-body">
-                                            ${album.nome}
-                                        </div>
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading"><b>Nome</b></div>
+                                    <div class="panel-body">
+                                        ${album.nome}
                                     </div>
+                                </div>
                             </c:if>
 
                             <div class="text-center">
@@ -89,7 +91,7 @@
                     </form>
                 </div>
             </div>
-                                
+
             <!-- Modal -->
             <div class="modal fade" id="modal-album" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">

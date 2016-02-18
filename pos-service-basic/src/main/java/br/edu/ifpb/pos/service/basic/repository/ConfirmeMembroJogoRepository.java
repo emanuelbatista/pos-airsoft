@@ -5,12 +5,12 @@
  */
 package br.edu.ifpb.pos.service.basic.repository;
 
-import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
+import br.edu.ifpb.pos.entity.ConfirmacaoMembroJogo;
 
 /**
- *
+ * Repositório que manipula a entidade {@link ConfirmacaoMembroJogo} na base de dados
  * @author emanuel
  */
-public class ConfirmeMembroJogoRepository extends JpaRepository<ConfirmeMembroJogo, String>{
+public class ConfirmeMembroJogoRepository extends JpaRepository<ConfirmacaoMembroJogo, String>{
     
 }

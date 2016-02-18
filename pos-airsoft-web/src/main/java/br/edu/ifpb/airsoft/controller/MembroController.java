@@ -29,11 +29,22 @@ public class MembroController {
     @Autowired
     private ServiceDominio serviceDominio;
 
+    /**
+     * página para adiciona um novo Membro
+     * @return 
+     */
     @RequestMapping(value = "/membro/add", method = RequestMethod.GET)
     public String addMembro() {
         return "membro/addMembro";
     }
 
+    /**
+     * Adiciona um novo Membro
+     * @param membro
+     * @param result
+     * @param model
+     * @return 
+     */
     @RequestMapping(value = "/membro/add", method = RequestMethod.POST)
     public String addMembro(@Valid Membro membro, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -49,6 +60,11 @@ public class MembroController {
         return "redirect:/membros";
     }
 
+    /**
+     * Lista todos os membros
+     * @param model
+     * @return 
+     */
     @RequestMapping(value = "/membros")
     public String listMembros(Model model) {
         try {

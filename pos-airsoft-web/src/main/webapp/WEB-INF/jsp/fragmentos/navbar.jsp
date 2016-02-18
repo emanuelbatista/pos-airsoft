@@ -28,6 +28,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="/jogo/add">Adicionar</a></li>
                         <li><a href="/jogos/1">Listar</a></li>
+                        <li><a href="/jogos/1/realizados">Listar Realizados</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

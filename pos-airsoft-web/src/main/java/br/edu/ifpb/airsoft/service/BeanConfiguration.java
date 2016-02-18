@@ -18,12 +18,16 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 
 /**
- *
+ * Contém as configurações das injeções dos beans
  * @author emanuel
  */
 @Configuration
-public class ServiceDominioConfiguration {
+public class BeanConfiguration {
     
+    /**
+     * Configuração de injeção da classe {@link ServiceDominio}
+     * @return 
+     */
     @Bean
     @Scope(value = "singleton",proxyMode = ScopedProxyMode.DEFAULT)
     public ServiceDominio getService(){
@@ -33,7 +37,7 @@ public class ServiceDominioConfiguration {
             Service service=Service.create(url, qName);
             return service.getPort(ServiceDominio.class);
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ServiceDominioConfiguration.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BeanConfiguration.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

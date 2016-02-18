@@ -6,7 +6,7 @@
 package br.edu.ifpb.pos.service.dominio.service;
 
 import br.edu.ifpb.pos.entity.Album;
-import br.edu.ifpb.pos.entity.ConfirmeMembroJogo;
+import br.edu.ifpb.pos.entity.ConfirmacaoMembroJogo;
 import br.edu.ifpb.pos.entity.Imagem;
 import br.edu.ifpb.pos.entity.Jogo;
 import br.edu.ifpb.pos.entity.JogoEstado;
@@ -93,7 +93,7 @@ public class ServiceDominioImp implements ServiceDominio {
         Mail mail = new Mail();
         String codigo = mail.enviarConfirmacaoMembroJogo(jogo, membro);
         //
-        ConfirmeMembroJogo confirmeMembroJogo = new ConfirmeMembroJogo();
+        ConfirmacaoMembroJogo confirmeMembroJogo = new ConfirmacaoMembroJogo();
         confirmeMembroJogo.setToken(codigo);
         confirmeMembroJogo.setJogo(jogo);
         confirmeMembroJogo.setMembro(membro);
@@ -114,7 +114,7 @@ public class ServiceDominioImp implements ServiceDominio {
 
     @Override
     public boolean confirmarMembroJogo(String token) throws RemoteException {
-        ConfirmeMembroJogo confirmeMembroJogo = serviceBasic.getConfirmeMembroJogo(token);
+        ConfirmacaoMembroJogo confirmeMembroJogo = serviceBasic.getConfirmeMembroJogo(token);
         if (confirmeMembroJogo == null) {
             return false;
         }
@@ -158,6 +158,11 @@ public class ServiceDominioImp implements ServiceDominio {
     @Override
     public void addNovaImagemAlbum(Long idAlbum, Imagem imagem) throws RemoteException {
        serviceBasic.addNovaImagemAlbum(idAlbum, imagem);
+    }
+
+    @Override
+    public List<Jogo> listJogoEstado(Integer numPagina, JogoEstado estado) throws RemoteException {
+        return serviceBasic.finJogoPaginadoEstado(numPagina, estado);
     }
 
 }

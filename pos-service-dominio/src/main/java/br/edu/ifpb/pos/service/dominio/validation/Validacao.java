@@ -14,11 +14,18 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 /**
- *
+ * Responsável pela validação de entidades
  * @author emanuel
  */
 public class Validacao {
 
+    /**
+     * Valida uma determinada entidade de acordo as anotação do <b>Hibernate Validation</b>
+     * @param <T> Classe que será validada
+     * @param t Objeto que será validado
+     * @param grupos grupo de validação que será utilizado na validação
+     * @return List de Violações das validação da entidade
+     */
     public static <T> List<ConstraintViolation<T>> validar(T t, Class... grupos) {
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         Validator validator = validatorFactory.getValidator();

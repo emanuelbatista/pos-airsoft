@@ -6,10 +6,10 @@
 package br.edu.ifpb.pos.service.basic.repository;
 
 import br.edu.ifpb.pos.entity.Album;
-import br.edu.ifpb.pos.entity.Imagem;
 
 /**
- *
+ * Repositório que realiza as operações na base de dados da entidade {@link Album} 
+ * 
  * @author emanuel
  */
 public class AlbumRepository extends JpaRepository<Album, Long>{

@@ -12,11 +12,18 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
 /**
+ * Fábrica para que retorna o serviço básico da aplicação
  *
  * @author emanuel
  */
 public class ServiceBasicFactory {
 
+    /**
+     * Instância a classe responsável pelos serviços básico (infraestrutura) da aplicação 
+     * 
+     * @return Servi ço Básico (Infraestrutura)
+     * @throws MalformedURLException 
+     */
     public static ServiceBasic getInstance() throws MalformedURLException {
         URL url = new URL("http://localhost:8000/airsoft?wsdl");
         QName qName = new QName("http://service.pos.ifpb.edu.br/", "ServiceBasic");

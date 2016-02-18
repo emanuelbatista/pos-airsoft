@@ -24,7 +24,7 @@ import javax.persistence.OneToOne;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- *
+ *Representa a entidade de um jogo
  * @author emanuel
  */
 @Entity
